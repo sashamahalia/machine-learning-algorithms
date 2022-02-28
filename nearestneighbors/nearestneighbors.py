@@ -18,3 +18,9 @@ safety = le.fit_transform(list(data["safety"]))
 clss = le.fit_transform(list(data["class"]))
 
 predict = "class"
+X = list(zip(buying, maint, door, persons, lug_boot, safety))
+y = list(clss)
+
+x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.1)
+
+print(x_train, y_test)
