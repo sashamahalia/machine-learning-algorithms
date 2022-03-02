@@ -1,15 +1,19 @@
 import sklearn
-from sklearn import datasets, svm
-cancer = datasets.load_breast_cancer()
+from sklearn import datasets, svm, metrics
+from sklearn.neighbors import KNeighborsClassifier
 
-print(cancer.feature_names)
-print(cancer.target_names)
+cancer = datasets.load_breast_cancer()
 
 X = cancer.data
 y = cancer.target
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y, test_size=0.2)
 
-print(x_train, y_train)
+clf = svm.SVC(kernel="linear", C=2)
+clf.fit(x_train, y_train)
 
-classes = ['malignant' 'benign']
+y_predict = clf.predict(x_test)
+
+acc = metrics.accuracy_score(y_test, y_predict)
+
+print(acc)
