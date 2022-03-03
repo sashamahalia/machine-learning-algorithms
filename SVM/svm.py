@@ -17,29 +17,21 @@ data = data[["title", "text", "label"]]
 predict = "label"
 text_list = data['text'].values.tolist()
 
-
-# title = sklearn.feature_extraction.text.CountVectorizer(data["title"])
-#
+# split text into numerical representation of word frequency.
 vectorizer = CountVectorizer()
-
 text_vectorized = vectorizer.fit_transform(text_list)
 
 # Term frequency transformer with idf (Inverse Document Frequency) enabled
 tfidf_transformer = TfidfTransformer(use_idf=True)
 X_train_tfidf = tfidf_transformer.fit_transform(text_vectorized)
-print("X data shape: ", X_train_tfidf.shape)
 
 le = preprocessing.LabelEncoder()
 label = le.fit_transform(list(data["label"]))
 y = list(label)
 
+# search for occurrences of a single word in the text
 print(f"Occurrences of search term: ", vectorizer.vocabulary_.get(u'compared'))
 
-
-#
-# X = list(zip(title, text))
-# y = list(label)
-#
 
 x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(X_train_tfidf, y, test_size=0.2)
 
